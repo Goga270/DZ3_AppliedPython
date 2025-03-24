@@ -16,7 +16,6 @@ from io import BytesIO
 import os
 from dotenv import load_dotenv
 
-# Загружаем переменные из .env
 load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
@@ -34,8 +33,8 @@ def get_password_hash(password):
     return pwd_context.hash(password)
 
 
-DATABASE_URL = os.getenv("DATABASE_URL")
-REDIS_URL = os.getenv("REDIS_URL")
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://user:password@db/shortener")
+REDIS_URL = os.getenv("REDIS_URL", "redis://redis:6379/0")
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
